@@ -1,18 +1,19 @@
 #!/usr/bin/python3
-"""create an algorithm for calculating the rain"""
+"""calculates how much rain will be trapped after it rains
+"""
 
 
 def rain(walls):
-    """calculate how much water will be retained after it rains"""
+    """calculates how much rain will be trapped after it rains
+    """
     if not walls or len(walls) < 3:
         return 0
-    water = 0
+
+    rain = 0
     for i in range(1, len(walls) - 1):
-        left = walls[i]
-        for j in range(i):
-            left = max(left, walls[j])
-        right = walls[i]
-        for j in range(i + 1, len(walls)):
-            right = max(right, walls[j])
-        water += min(left, right) - walls[i]
-    return water
+        left = max(walls[:i])
+        right = max(walls[i + 1:])
+        min_wall = min(left, right)
+        if walls[i] < min_wall:
+            rain += min_wall - walls[i]
+    return rain
